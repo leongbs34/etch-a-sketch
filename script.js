@@ -1,6 +1,8 @@
 
 for(let i = 0 ; i < 16; i++){
     const div = document.createElement('div');
+    div.classList.add(`rows`);
+    div.id = `row${i+1}`;
     document.body.appendChild(div);
 }
 

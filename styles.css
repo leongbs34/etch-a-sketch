@@ -1,0 +1,4 @@
+.rows{
+    display: inline-grid;
+    grid-template-columns: repeat(16, 40px);
+}
