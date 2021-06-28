@@ -1,41 +1,32 @@
 let gridSize = getComputedStyle(document.documentElement).getPropertyValue('--gridSize');
+const container = document.querySelector('#divContainer');
 
 function createGrid(){
-    const prevDiv = document.querySelectorAll('div');
+    const prevDiv = document.querySelectorAll('div[class="grid"]');
     prevDiv.forEach(div => div.remove());
-    for(let i = 0 ; i < gridSize; i++){
+    for(let i = 0 ; i < gridSize * gridSize; i++){
         const div = document.createElement('div');
-        div.classList.add(`rows`);
-        div.id = `row${i+1}`;
-        document.body.appendChild(div);
+        div.classList.add('grid')
+        container.appendChild(div);
     }
-    
-    const divs = document.querySelectorAll('div');
-    
-    for(let i = 0 ; i < gridSize; i++){
-        for(let j = 0 ; j < gridSize; j++){
-            const div = document.createElement('div');
-            div.classList.add('grid');
-            div.textContent = j+1;
-            divs[i].appendChild(div);
-        }
-    }
+
+    container.style.gridTemplateColumns = `repeat(${gridSize}, 1fr)`;
+    container.style.gridTemplateRows = `repeat(${gridSize}, 1fr)`;
+    const grid = document.querySelectorAll('div[class="grid"]');
+    grid.forEach(item => item.addEventListener('mouseover', setColorOnHover));
 }
 
 function setColorOnHover(item){
-    item.target.classList.add('grid-hover');
+    item.target.style.backgroundColor = 'aqua';
 }
 
 createGrid();
-const grid = document.querySelectorAll('div[class="grid"]');
-
-grid.forEach(item => item.addEventListener('mouseover', setColorOnHover));
 
 const btn = document.querySelector('button[id="reset"]');
 
 btn.addEventListener('click', () => {
     gridSize = parseInt(prompt('Please enter your desired grid size to reset'));
-    if((gridSize > 0) && (gridSize <= 100) &&(Number.isInteger(gridSize))){}
+    if((gridSize > 0) && (gridSize <= 90) &&(Number.isInteger(gridSize))){}
     else gridSize = 16;
     createGrid();
 })
